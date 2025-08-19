@@ -19,6 +19,15 @@ const Card = () => {
     });
   };
 
+  // Handle keyboard events
+  const handleKeyDown = (event: React.KeyboardEvent, index: number) => {
+    if (event.key === "Enter" || event.key === " ") {
+      // Enter or Spacebar
+      event.preventDefault(); // Prevent default scrolling behavior for spacebar
+      toggleItem(index);
+    }
+  };
+
   // Helper function to render each FAQ item
   const renderFaqItem = (
     index: number,
@@ -33,12 +42,17 @@ const Card = () => {
         <div className="faq__question--container">
           {/* Clickable question area */}
           <div
-            className="faq__question flex flex-row items-center gap-6 w-full justify-between pb-[24px] cursor-pointer group"
+            className="faq__question flex flex-row items-center gap-6 w-full justify-between pb-[24px] cursor-pointer group focus:outline-none "
             onClick={() => {
               toggleItem(index);
             }}
+            onKeyDown={(event) => handleKeyDown(event, index)}
+            tabIndex={0} // Makes the div focusable
+            role="button" // Tells screen readers this is a button
+            aria-expanded={isOpen} // Tells screen readers if it's expanded
+            aria-controls={`faq-answer-${index}`} // Links to the answer element
           >
-            <h2 className="text-[#301534] text-[18px] leading-[21px] font-bold group-hover:text-[#AD28EB] transition-colors duration-100">
+            <h2 className="text-[#301534] text-[18px] max-[375px]:text-[16px] leading-[21px] font-bold group-hover:text-[#AD28EB] group-focus:text-[#AD28EB] transition-colors duration-100">
               {question}
             </h2>
             {/* Show minus icon if open, plus icon if closed */}
@@ -52,11 +66,12 @@ const Card = () => {
 
           {/* Answer that appears/disappears with smooth animation */}
           <div
+            id={`faq-answer-${index}`} // ID for aria-controls
             className={`faq__answer overflow-hidden transition-all duration-200 ease-in-out ${
               isOpen ? "max-h-96 opacity-100 pb-[24px]" : "max-h-0 opacity-0"
             }`}
           >
-            <p className="text-[#8B6990] text-[16px] leading-[24px]">
+            <p className="text-[#8B6990] text-[16px] max-[375px]:text-[14px] leading-[24px]">
               {answer}
             </p>
           </div>
@@ -71,9 +86,16 @@ const Card = () => {
 
   // Single return statement for the main component
   return (
-    <div className="mx-auto bg-white min-h-[565px] rounded-[3%] w-full pt-[40px] pr-[40px] pb-[0px,] pl-[40px]">
+    // Update the main container div:
+    <div className="mx-auto bg-white min-h-[565px] rounded-[3%] w-full max-w-none max-[375px]:max-w-[327px] pt-[40px] max-[375px]:pt-[24px] pr-[40px] max-[375px]:pr-[24px] pb-[0px] pl-[40px] max-[375px]:pl-[24px]">
       <header className="flex flex-row items-center gap-6 w-full mb-[32px]">
-        <Image src={starIcon} alt="Star icon" width={40} height={40} />
+        <Image
+          src={starIcon}
+          alt="Star icon"
+          width={40}
+          height={40}
+          className="w-10 h-10 max-[375px]:w-6 max-[375px]:h-6"
+        />
         <h1 className="faq__title">FAQs</h1>
       </header>
 

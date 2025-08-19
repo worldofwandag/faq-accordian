@@ -15,6 +15,22 @@ body {
   line-height: 66px;
   font-weight: 800;
   text-shadow: black;
-  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.35);
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.35);
+}
+
+/* Remove drop shadow for screens 768px and below */
+@media (max-width: 768px) {
+  .faq__title {
+    text-shadow: none;
+  }
+}
+
+/* Mobile styles for screens 375px and below */
+@media (max-width: 375px) {
+  .faq__title {
+    font-size: 32px;
+    line-height: 38px;
+    text-shadow: none;
+  }
 }
 
