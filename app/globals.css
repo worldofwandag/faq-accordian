@@ -10,8 +10,11 @@ body {
 }
 
 .faq__title {
+  color: #301534;
   font-size: 56px;
   line-height: 66px;
   font-weight: 800;
+  text-shadow: black;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.35);
 }
 
