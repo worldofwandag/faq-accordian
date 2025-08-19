@@ -1,82 +1,110 @@
+"use client";
+
 import Image from "next/image";
 import starIcon from "../assets/images/icon-star.svg";
 import minusIcon from "../assets/images/icon-minus.svg";
-import plusIcon from "../assets/images/icon-plus.svg"
-import React from "react";
+import plusIcon from "../assets/images/icon-plus.svg";
+import React, { useState } from "react";
 
 const Card = () => {
+  const [openItems, setOpenItems] = useState<number[]>([0]); // Start with first item open
+
+  // Function to toggle an FAQ item open/closed
+  const toggleItem = (index: number) => {
+    setOpenItems((prev) => {
+      const newItems = prev.includes(index)
+        ? prev.filter((i) => i !== index) // Remove from array (close)
+        : [...prev, index]; // Add to array (open)
+      return newItems;
+    });
+  };
+
+  // Helper function to render each FAQ item
+  const renderFaqItem = (
+    index: number,
+    question: string,
+    answer: string,
+    isLast: boolean = false
+  ) => {
+    const isOpen = openItems.includes(index);
+
+    return (
+      <div key={index} className="faq__item">
+        <div className="faq__question--container">
+          {/* Clickable question area */}
+          <div
+            className="faq__question flex flex-row items-center gap-6 w-full justify-between pb-[24px] cursor-pointer group"
+            onClick={() => {
+              toggleItem(index);
+            }}
+          >
+            <h2 className="text-[#301534] text-[18px] leading-[21px] font-bold group-hover:text-[#AD28EB] transition-colors duration-100">
+              {question}
+            </h2>
+            {/* Show minus icon if open, plus icon if closed */}
+            <Image
+              src={isOpen ? minusIcon : plusIcon}
+              alt={isOpen ? "Minus icon" : "Plus icon"}
+              width={30}
+              height={30}
+            />
+          </div>
+
+          {/* Answer that appears/disappears with smooth animation */}
+          <div
+            className={`faq__answer overflow-hidden transition-all duration-200 ease-in-out ${
+              isOpen ? "max-h-96 opacity-100 pb-[24px]" : "max-h-0 opacity-0"
+            }`}
+          >
+            <p className="text-[#8B6990] text-[16px] leading-[24px]">
+              {answer}
+            </p>
+          </div>
+        </div>
+        {/* Conditionally render border - only if it's NOT the last item */}
+        {!isLast && (
+          <div className="w-full border-t border-gray-300 mb-[24px]"></div>
+        )}
+      </div>
+    );
+  };
+
+  // Single return statement for the main component
   return (
-    <div className="mx-auto bg-white h-[565px] rounded-[3%] w-full p-[40px]">
+    <div className="mx-auto bg-white min-h-[565px] rounded-[3%] w-full pt-[40px] pr-[40px] pb-[0px,] pl-[40px]">
       <header className="flex flex-row items-center gap-6 w-full mb-[32px]">
         <Image src={starIcon} alt="Star icon" width={40} height={40} />
         <h1 className="faq__title">FAQs</h1>
       </header>
+
       <div className="faq__list">
+        {renderFaqItem(
+          0,
+          "What is Frontend Mentor, and how will it help me?",
+          "Frontend Mentor offers realistic coding challenges to help developers improve their frontend coding skills with projects in HTML, CSS, and JavaScript. It's suitable for all levels and ideal for portfolio building.",
+          false
+        )}
 
+        {renderFaqItem(
+          1,
+          "Is Frontend Mentor free?",
+          "Yes, Frontend Mentor offers both free and premium challenges. Free challenges provide access to basic projects and community features.",
+          false
+        )}
 
-        <div className="faq__item">
-          <div className="faq__question--container">
-            <div className="faq__question flex flex-row items-center gap-6 w-full justify-between pb-[24px]">
-              <h2 className="text-[#301534] text-[18px] leading-[21px] font-bold">
-                What is Frontend Mentor, and how will it help me?
-              </h2>
-              <Image src={minusIcon} alt="Minus icon" width={40} height={40} />
-            </div>
-            <div className="faq__answer pb-[24px]">
-                <p className="text-[#8B6990] text-[16px] leading-[24px]">Frontend Mentor offers realistic coding challenges to help developers improve their frontend coding skills with projects in HTML, CSS, and JavaScript. It's suitable for all levels and ideal for portfolio building. </p>
-            </div>
-          </div>
-          <div className="w-full border-t border-gray-300 mb-[24px]"></div>
-        </div>
+        {renderFaqItem(
+          2,
+          "Can I use Frontend Mentor projects in my portfolio?",
+          "Absolutely! Frontend Mentor projects are designed to be portfolio pieces. They provide realistic practice and demonstrate your coding skills to potential employers.",
+          false
+        )}
 
-
-        <div className="faq__item">
-          <div className="faq__question--container">
-            <div className="faq__question flex flex-row items-center gap-6 w-full justify-between pb-[24px]">
-              <h2 className="text-[#301534] text-[18px] leading-[21px] font-bold">
-                Is Frontend Mentor free?
-              </h2>
-              <Image src={plusIcon} alt="Minus icon" width={40} height={40} />
-            </div>
-            <div className="faq__answer pb-[24px]">
-                <p className="text-[#8B6990] text-[16px] leading-[24px]">temporary</p>
-            </div>
-          </div>
-          <div className="w-full border-t border-gray-300 mb-[24px]"></div>
-        </div>
-
-
-        <div className="faq__item">
-          <div className="faq__question--container">
-            <div className="faq__question flex flex-row items-center gap-6 w-full justify-between pb-[24px]">
-              <h2 className="text-[#301534] text-[18px] leading-[21px] font-bold">
-                Can I use Frontend Mentor projects in my portfolio?
-              </h2>
-              <Image src={plusIcon} alt="Minus icon" width={40} height={40} />
-            </div>
-            <div className="faq__answer pb-[24px]">
-                <p className="text-[#8B6990] text-[16px] leading-[24px]">temporary</p>
-            </div>
-          </div>
-          <div className="w-full border-t border-gray-300 mb-[24px]"></div>
-        </div>
-
-        <div className="faq__item">
-          <div className="faq__question--container">
-            <div className="faq__question flex flex-row items-center gap-6 w-full justify-between pb-[24px]">
-              <h2 className="text-[#301534] text-[18px] leading-[21px] font-bold">
-                How can I get help if I'm stuck on a challenge?
-              </h2>
-              <Image src={plusIcon} alt="Minus icon" width={40} height={40} />
-            </div>
-            <div className="faq__answer pb-[24px]">
-                <p className="text-[#8B6990] text-[16px] leading-[24px]">temporary</p>
-            </div>
-          </div>
-          <div className="w-full border-t border-gray-300 mb-[24px]"></div>
-        </div>
-            
-        
+        {renderFaqItem(
+          3,
+          "How can I get help if I'm stuck on a challenge?",
+          "Frontend Mentor has an active community on Discord and Slack where you can ask questions. You can also check out solutions from other developers for inspiration.",
+          true
+        )}
       </div>
     </div>
   );
