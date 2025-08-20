@@ -14,10 +14,9 @@ const workSans = localFont({
       weight: '100 900',
       style: 'italic',
     },
-    
   ],
   variable: '--font-work-sans',
-  display: 'swap',
+  display: 'swap', //shows fallback font until custom font loads
 });
 
 export const metadata: Metadata = {

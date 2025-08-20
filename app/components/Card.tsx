@@ -7,14 +7,14 @@ import plusIcon from "../assets/images/icon-plus.svg";
 import React, { useState } from "react";
 
 const Card = () => {
-  const [openItems, setOpenItems] = useState<number[]>([0]); // Start with first item open
+  const [openItems, setOpenItems] = useState<number[]>([0]); // Start with first item open which is index 0
 
   // Function to toggle an FAQ item open/closed
   const toggleItem = (index: number) => {
     setOpenItems((prev) => {
       const newItems = prev.includes(index)
-        ? prev.filter((i) => i !== index) // Remove from array (close)
-        : [...prev, index]; // Add to array (open)
+        ? prev.filter((i) => i !== index) // Remove from array (close) when using the toggle button
+        : [...prev, index]; // Add to array (open) when using the toggle button
       return newItems;
     });
   };
@@ -33,7 +33,7 @@ const Card = () => {
     index: number,
     question: string,
     answer: string,
-    isLast: boolean = false
+    isLast: boolean = false //because last faq__item shouldn't have a line below it.
   ) => {
     const isOpen = openItems.includes(index);
 
