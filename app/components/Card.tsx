@@ -67,8 +67,8 @@ const Card = () => {
           {/* Answer that appears/disappears with smooth animation */}
           <div
             id={`faq-answer-${index}`} // ID for aria-controls
-            className={`faq__answer overflow-hidden transition-all duration-200 ease-in-out ${
-              isOpen ? "max-h-96 opacity-100 pb-[24px]" : "max-h-0 opacity-0"
+            className={`faq__answer overflow-hidden transition-all duration-300 ease-in-out ${
+              isOpen ? "max-h-96 opacity-100 pb-[24px]" : "max-h-0"
             }`}
           >
             <p className="text-[#8B6990] text-[16px] max-[375px]:text-[14px] leading-[24px]">
@@ -87,7 +87,7 @@ const Card = () => {
   // Single return statement for the main component
   return (
     // Update the main container div:
-    <div className="mx-auto bg-white min-h-[565px] rounded-[3%] w-full max-w-none max-[375px]:max-w-[327px] pt-[40px] max-[375px]:pt-[24px] pr-[40px] max-[375px]:pr-[24px] pb-[0px] pl-[40px] max-[375px]:pl-[24px]">
+    <div className="mx-auto bg-white min-h-[565px] rounded-[3%] w-full max-[375px]:max-w-[327px] pt-[40px] max-[375px]:pt-[24px] pr-[40px] max-[375px]:pr-[24px] pb-[0px] pl-[40px] max-[375px]:pl-[24px]">
       <header className="flex flex-row items-center gap-6 w-full mb-[32px]">
         <Image
           src={starIcon}
